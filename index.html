@@ -3,30 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>HRRY Sub to Unlock | Premium</title>
+    <title>HRRY Sub to Unlock | Ultra Premium</title>
     <meta name="theme-color" content="#03050B">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Brand Colors */
+            /* Ultra Premium Brand Colors */
             --bg-obsidian: #03050B;
-            --bg-panel: rgba(10, 15, 30, 0.7);
+            --bg-panel: rgba(10, 15, 30, 0.4);
             --primary-red: #FF173B;
             --electric-blue: #168CFF;
             --cyan-neon: #45DFFF;
-            --success-green: #10B981;
-            --success-bg: rgba(16, 185, 129, 0.15);
+            --success-green: #00E676;
+            --success-glow: rgba(0, 230, 118, 0.4);
             --gold-accent: #FFC65A;
             
             /* Text */
             --text-white: #FFFFFF;
             --text-silver: #E2E8F0;
-            --text-muted: #94A3B8;
+            --text-muted: #8B9BB4;
             
             /* UI Elements */
             --glass-border: rgba(255, 255, 255, 0.08);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy Transition */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -38,167 +38,218 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Ambient Background */
+        /* --- APP OPENING LOADER --- */
+        #app-loader {
+            position: fixed; inset: 0; background: var(--bg-obsidian);
+            z-index: 99999; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+        #app-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+        
+        .loader-logo {
+            width: 80px; height: 80px;
+            background: linear-gradient(135deg, #111, #000); border: 2px solid var(--gold-accent);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 40px rgba(255, 198, 90, 0.5);
+            animation: pulse-glow 1.5s infinite alternate;
+        }
+        .loader-logo svg { width: 40px; height: 40px; fill: var(--gold-accent); }
+        .loader-text { margin-top: 24px; font-size: 1.2rem; font-weight: 700; letter-spacing: 4px; color: var(--gold-accent); text-transform: uppercase; animation: fade-in-out 1.5s infinite alternate;}
+
+        @keyframes pulse-glow { 0% { transform: scale(0.95); box-shadow: 0 0 20px rgba(255, 198, 90, 0.2); } 100% { transform: scale(1.05); box-shadow: 0 0 50px rgba(255, 198, 90, 0.8); } }
+        @keyframes fade-in-out { 0% { opacity: 0.5; } 100% { opacity: 1; text-shadow: 0 0 10px var(--gold-accent); } }
+
+        /* Ambient Background with Animated Glows */
         .ambient-bg {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;
-            background: radial-gradient(circle at 50% 0%, rgba(22, 140, 255, 0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 50% 100%, rgba(255, 23, 59, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 15% 0%, rgba(22, 140, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 85% 100%, rgba(255, 23, 59, 0.15) 0%, transparent 50%);
+            animation: bg-shift 10s infinite alternate;
         }
+        @keyframes bg-shift { 0% { filter: hue-rotate(0deg); } 100% { filter: hue-rotate(20deg); } }
 
         /* Navigation */
         nav {
-            position: sticky; top: 0; z-index: 100;
-            padding: 12px 20px;
-            background: rgba(3, 5, 11, 0.85); backdrop-filter: blur(12px);
+            position: sticky; top: 0; z-index: 100; padding: 12px 20px;
+            background: rgba(3, 5, 11, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
             display: flex; justify-content: space-between; align-items: center;
         }
-
         .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
-        .logo-box { 
-            width: 32px; height: 32px; 
-            background: linear-gradient(135deg, #111, #000); border: 1px solid var(--gold-accent);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 0 10px rgba(255, 198, 90, 0.2);
-        }
+        .logo-box { width: 32px; height: 32px; background: #000; border: 1px solid var(--gold-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(255, 198, 90, 0.3); }
         .logo-box svg { width: 16px; height: 16px; fill: var(--gold-accent); }
-        .brand-text { font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; }
-
+        .brand-text { font-weight: 800; font-size: 1.2rem; letter-spacing: 1px; background: linear-gradient(90deg, #fff, var(--text-silver)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+        
         .btn-create-nav {
-            background: rgba(22, 140, 255, 0.1); border: 1px solid var(--electric-blue);
-            color: var(--cyan-neon); padding: 6px 14px; border-radius: 20px;
-            font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+            background: rgba(22, 140, 255, 0.1); border: 1px solid var(--electric-blue); color: var(--cyan-neon);
+            padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;
         }
-        .btn-create-nav:hover { background: var(--electric-blue); color: white; box-shadow: 0 0 15px rgba(22, 140, 255, 0.4); }
+        .btn-create-nav:hover { background: var(--electric-blue); color: white; box-shadow: 0 0 20px rgba(22, 140, 255, 0.5); transform: translateY(-1px);}
 
         /* Main Container */
         .container {
-            width: 100%; max-width: 600px; margin: 0 auto; padding: 20px 16px 100px;
-            display: flex; flex-direction: column; gap: 16px;
+            width: 100%; max-width: 600px; margin: 0 auto; padding: 24px 16px 120px;
+            display: flex; flex-direction: column; gap: 16px; position: relative; z-index: 10;
         }
 
-        /* Header / Hero */
-        .header-panel { text-align: center; padding: 10px 0 20px; }
-        .header-panel h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
-        .header-panel p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.4; }
+        .header-panel { text-align: center; padding: 10px 0 24px; }
+        .header-panel h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; background: linear-gradient(to right, #fff, #94A3B8); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+        .header-panel p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
 
-        /* Compact Task Cards */
+        /* Premium Task Cards */
         .task-card {
             background: var(--bg-panel); border: 1px solid var(--glass-border);
-            border-radius: 12px; padding: 12px 16px;
-            display: flex; align-items: center; gap: 12px;
-            transition: var(--transition); position: relative; overflow: hidden;
+            border-radius: 16px; padding: 14px 16px; display: flex; align-items: center; gap: 14px;
+            position: relative; overflow: hidden; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition); box-shadow: 0 8px 32px rgba(0,0,0,0.3);
         }
-        .task-card:hover { border-color: rgba(255, 255, 255, 0.2); }
+        
+        /* Shimmer Effect on Cards */
+        .task-card::before {
+            content: ''; position: absolute; top: 0; left: -150%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transform: skewX(-20deg); transition: 0.5s;
+        }
+        .task-card:hover::before { left: 150%; transition: 0.7s; }
+        .task-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.2); box-shadow: 0 10px 40px rgba(22, 140, 255, 0.1); }
 
-        /* The Complete Green State */
+        /* The Complete Green State (High Graphic) */
         .task-card.verified {
-            background: var(--success-bg) !important;
+            background: linear-gradient(135deg, rgba(0, 230, 118, 0.1), rgba(0, 230, 118, 0.02)) !important;
             border-color: var(--success-green) !important;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+            box-shadow: 0 0 25px var(--success-glow), inset 0 0 15px rgba(0, 230, 118, 0.1) !important;
+            transform: scale(1.02);
         }
 
         .platform-icon {
-            width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+            width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
             display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05); transition: var(--transition);
         }
-        .platform-icon svg { width: 22px; height: 22px; fill: #fff; }
+        .platform-icon svg { width: 24px; height: 24px; fill: #fff; }
         
         .task-card.verified .platform-icon {
             background: var(--success-green);
+            box-shadow: 0 0 15px var(--success-green);
         }
 
         .task-info { flex-grow: 1; min-width: 0; }
-        .task-title { font-size: 1rem; font-weight: 600; color: var(--text-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .task-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .task-title { font-size: 1.05rem; font-weight: 700; color: var(--text-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .task-desc { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        .task-card.verified .task-title, 
-        .task-card.verified .task-desc { color: var(--success-green); }
+        .task-card.verified .task-title { color: var(--success-green); text-shadow: 0 0 10px rgba(0, 230, 118, 0.5); }
+        .task-card.verified .task-desc { color: rgba(0, 230, 118, 0.8); }
 
         .btn-action {
-            padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
-            border: none; cursor: pointer; color: white; display: flex; align-items: center; gap: 6px;
-            flex-shrink: 0; transition: var(--transition);
+            padding: 10px 18px; border-radius: 10px; font-size: 0.9rem; font-weight: 700;
+            border: none; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px;
+            flex-shrink: 0; transition: var(--transition); box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
-        .btn-action:active { transform: scale(0.95); }
-        .btn-action svg { width: 14px; height: 14px; fill: currentColor; }
+        .btn-action:active { transform: scale(0.92); }
+        .btn-action svg { width: 16px; height: 16px; fill: currentColor; }
 
         .task-card.verified .btn-action {
-            background: transparent !important; color: var(--success-green) !important; border: 1px solid var(--success-green); cursor: default; pointer-events: none;
+            background: transparent !important; color: var(--success-green) !important; 
+            border: 1.5px solid var(--success-green); cursor: default; pointer-events: none; box-shadow: none;
         }
 
-        /* Sticky Bottom Progress/Unlock Bar */
+        /* Sticky Bottom Bar */
         .bottom-bar {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(3, 5, 11, 0.95); backdrop-filter: blur(15px);
+            background: linear-gradient(to top, rgba(3,5,11,1) 40%, rgba(3,5,11,0.8) 100%);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid var(--glass-border);
             padding: 16px 20px; padding-bottom: calc(16px + env(safe-area-inset-bottom));
             display: flex; flex-direction: column; align-items: center; z-index: 99;
         }
         
-        .progress-text { font-size: 0.9rem; font-weight: 600; color: var(--text-silver); margin-bottom: 12px; }
+        .progress-text { font-size: 0.95rem; font-weight: 700; color: var(--text-silver); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;}
         
         .btn-unlock {
             width: 100%; max-width: 400px;
-            background: rgba(255, 255, 255, 0.1); color: var(--text-muted);
-            border: 1px solid var(--glass-border);
-            padding: 14px; border-radius: 12px; font-size: 1rem; font-weight: 600;
-            display: flex; justify-content: center; align-items: center; gap: 8px;
+            background: rgba(255, 255, 255, 0.05); color: var(--text-muted); border: 1px solid var(--glass-border);
+            padding: 16px; border-radius: 14px; font-size: 1.1rem; font-weight: 700;
+            display: flex; justify-content: center; align-items: center; gap: 10px;
             cursor: not-allowed; transition: var(--transition);
         }
         
         .btn-unlock.ready {
-            background: linear-gradient(90deg, #168CFF, #45DFFF); color: #000;
-            border: none; cursor: pointer; box-shadow: 0 0 20px rgba(69, 223, 255, 0.4);
+            background: linear-gradient(90deg, #168CFF, #45DFFF, #168CFF); background-size: 200% auto;
+            color: #000; border: none; cursor: pointer; 
+            box-shadow: 0 0 30px rgba(69, 223, 255, 0.6); animation: gradient-shift 3s linear infinite;
         }
-        .btn-unlock.ready:active { transform: scale(0.98); }
+        .btn-unlock.ready:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(69, 223, 255, 0.8); }
+        .btn-unlock.ready:active { transform: scale(0.96); }
 
-        /* Destination Panel (Hidden initially) */
+        @keyframes gradient-shift { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+
+        /* --- FINAL UNLOCK DESTINATION PANEL --- */
         .destination-panel {
-            background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success-green);
-            border-radius: 16px; padding: 24px; text-align: center; margin-top: 10px;
-            display: none; animation: fadeIn 0.5s;
+            background: radial-gradient(circle at top, rgba(0, 230, 118, 0.15), transparent 70%);
+            border: 1px solid var(--success-green); border-radius: 20px; padding: 40px 24px; 
+            text-align: center; margin-top: 20px; box-shadow: 0 0 50px rgba(0, 230, 118, 0.15);
+            display: none; animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
         }
         .destination-panel.show { display: block; }
-        .destination-panel h2 { color: var(--success-green); font-size: 1.5rem; margin-bottom: 16px; }
         
-        .url-box {
-            display: flex; background: rgba(0,0,0,0.5); border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.1); padding: 10px; margin-bottom: 16px;
+        .success-icon {
+            width: 80px; height: 80px; background: var(--success-green); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;
+            box-shadow: 0 0 30px var(--success-glow); animation: scaleUp 0.5s ease-out 0.2s both;
         }
-        .url-box input {
-            flex-grow: 1; background: transparent; border: none; color: white;
-            outline: none; font-family: monospace; font-size: 0.9rem;
-        }
-        .btn-copy { background: transparent; border: none; color: var(--cyan-neon); padding: 0 10px; cursor: pointer; }
+        .success-icon svg { width: 40px; height: 40px; fill: #000; }
+        
+        .destination-panel h2 { color: var(--success-green); font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+        .destination-panel p { color: var(--text-silver); font-size: 1rem; margin-bottom: 30px; }
 
-        /* CREATE MODE UI (Hidden by default) */
+        /* Direct Open Button (No URL box) */
+        .btn-glow-open {
+            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+            background: linear-gradient(135deg, var(--success-green), #00C853);
+            color: #000; padding: 18px 40px; border-radius: 50px; font-size: 1.2rem; font-weight: 800; text-decoration: none;
+            box-shadow: 0 10px 30px rgba(0, 230, 118, 0.4); transition: var(--transition);
+            text-transform: uppercase; letter-spacing: 1px; width: 100%;
+        }
+        .btn-glow-open:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 15px 40px rgba(0, 230, 118, 0.6); }
+        .btn-glow-open:active { transform: scale(0.95); }
+
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.8) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes scaleUp { 0% { transform: scale(0); } 70% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+        /* Full Screen Confetti Canvas */
+        #confetti-canvas {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 9999; display: none;
+        }
+
+        /* CREATE MODE UI */
         #create-view { display: none; }
-        .form-group { margin-bottom: 16px; }
-        .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text-silver); margin-bottom: 8px; }
         .form-control {
-            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
-            color: white; padding: 12px; border-radius: 8px; font-size: 1rem; outline: none;
+            width: 100%; background: rgba(0,0,0,0.5); border: 1px solid var(--glass-border);
+            color: white; padding: 14px; border-radius: 10px; font-size: 1rem; outline: none; transition: var(--transition);
         }
-        .form-control:focus { border-color: var(--electric-blue); }
+        .form-control:focus { border-color: var(--electric-blue); box-shadow: 0 0 15px rgba(22, 140, 255, 0.2); }
         
-        .creator-task {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
-            padding: 12px; border-radius: 8px; margin-bottom: 10px; position: relative;
-        }
-        .remove-task { position: absolute; top: 10px; right: 10px; color: var(--primary-red); cursor: pointer; border: none; background: none; font-size: 1.2rem; }
+        .creator-task { background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); padding: 16px; border-radius: 12px; margin-bottom: 12px; position: relative; }
+        .remove-task { position: absolute; top: 12px; right: 12px; color: var(--primary-red); cursor: pointer; border: none; background: rgba(255,23,59,0.1); width: 28px; height:28px; border-radius: 50%; font-size: 1.2rem; display:flex; align-items:center; justify-content:center;}
         
-        .btn-add { background: rgba(255,255,255,0.1); color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; margin-bottom: 20px;}
-        .btn-generate { background: var(--electric-blue); color: white; border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+        .btn-add { background: rgba(255,255,255,0.05); color: white; border: 1px dashed var(--text-muted); padding: 14px; width: 100%; border-radius: 12px; font-weight: 600; cursor: pointer; margin-bottom: 24px; transition: var(--transition);}
+        .btn-add:hover { background: rgba(255,255,255,0.1); border-color: white;}
+        
+        .btn-generate { background: var(--electric-blue); color: white; border: none; padding: 16px; width: 100%; border-radius: 12px; font-size: 1.1rem; font-weight: 700; cursor: pointer; box-shadow: 0 5px 20px rgba(22,140,255,0.3); transition: var(--transition);}
+        .btn-generate:active { transform: scale(0.96); }
 
-        #generated-link-box { display: none; margin-top: 20px; background: rgba(16, 185, 129, 0.1); padding: 16px; border-radius: 8px; border: 1px solid var(--success-green); text-align: center; }
+        #generated-link-box { display: none; margin-top: 24px; background: rgba(0, 230, 118, 0.1); padding: 20px; border-radius: 12px; border: 1px solid var(--success-green); text-align: center; animation: popIn 0.4s ease;}
+        .url-box { display: flex; background: rgba(0,0,0,0.6); border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); padding: 12px; margin: 16px 0; }
+        .url-box input { flex-grow: 1; background: transparent; border: none; color: white; outline: none; font-family: monospace; font-size: 0.95rem; }
+        .btn-copy { background: transparent; border: none; color: var(--success-green); padding: 0 10px; cursor: pointer; font-weight: 700;}
 
-        /* Animations */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
         /* Spinner */
         .spinner { animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
@@ -206,6 +257,17 @@
     </style>
 </head>
 <body>
+    <!-- App Loading Screen -->
+    <div id="app-loader">
+        <div class="loader-logo">
+            <svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5z"/></svg>
+        </div>
+        <div class="loader-text">HRRY</div>
+    </div>
+
+    <!-- Celebration Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
     <div class="ambient-bg"></div>
 
     <nav>
@@ -218,30 +280,34 @@
 
     <!-- VIEW MODE (Unlocker) -->
     <main class="container" id="main-view">
-        <div class="header-panel">
-            <h1 id="page-title">Subscribe & Unlock</h1>
-            <p id="page-desc">Complete the required tasks below to unlock your destination.</p>
+        <div class="header-panel" id="main-header">
+            <h1 id="page-title">Premium Access</h1>
+            <p id="page-desc">Complete all steps below to unlock destination.</p>
         </div>
 
-        <div id="tasks-container" style="display: flex; flex-direction: column; gap: 12px;">
+        <div id="tasks-container" style="display: flex; flex-direction: column; gap: 14px;">
             <!-- Tasks injected dynamically -->
         </div>
 
+        <!-- NEW FINAL UNLOCK PANEL -->
         <div class="destination-panel" id="dest-panel">
-            <h2>🎉 Content Unlocked!</h2>
-            <div class="url-box">
-                <input type="text" id="final-url" readonly>
-                <button class="btn-copy" onclick="app.copyText('final-url')">Copy</button>
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>
             </div>
-            <a href="#" id="btn-continue" style="display: inline-block; background: var(--success-green); color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Go to Destination</a>
+            <h2>Congratulations!</h2>
+            <p>Verification successful. Your premium content is ready.</p>
+            <a href="#" id="btn-continue" class="btn-glow-open" target="_blank">
+                Open Destination
+                <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+            </a>
         </div>
     </main>
 
     <div class="bottom-bar" id="bottom-bar">
-        <div class="progress-text" id="progress-text">0/0 Tasks Verified</div>
+        <div class="progress-text" id="progress-text">0/0 Verified</div>
         <button class="btn-unlock" id="btn-unlock" disabled>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
-            Content Locked
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+            Locked
         </button>
     </div>
 
@@ -249,32 +315,33 @@
     <main class="container" id="create-view">
         <div class="header-panel">
             <h1>Create Unlock Link</h1>
-            <p>Generate a secure link to lock your content.</p>
+            <p>Generate a secure, high-graphic link.</p>
         </div>
 
         <div class="form-group">
             <label>Page Title</label>
-            <input type="text" id="c-title" class="form-control" placeholder="e.g. My Premium Resources" value="My Premium Resources">
+            <input type="text" id="c-title" class="form-control" placeholder="e.g. Secret Masterclass" value="Premium Masterclass">
         </div>
         
         <div class="form-group">
-            <label>Destination URL (Hidden Content)</label>
-            <input type="url" id="c-dest" class="form-control" placeholder="https://drive.google.com/..." value="https://example.com/secret">
+            <label>Destination URL (Final Link)</label>
+            <input type="url" id="c-dest" class="form-control" placeholder="https://..." value="https://example.com/download">
         </div>
 
-        <h3 style="margin: 20px 0 10px; font-size: 1.1rem;">Required Tasks</h3>
+        <h3 style="margin: 24px 0 16px; font-size: 1.2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 8px;">Steps Required</h3>
         <div id="c-tasks-list"></div>
         <button class="btn-add" onclick="creator.addTaskUI()">+ Add Another Task</button>
 
-        <button class="btn-generate" onclick="creator.generateLink()">Generate Link</button>
+        <button class="btn-generate" onclick="creator.generateLink()">Generate Magic Link</button>
 
         <div id="generated-link-box">
-            <h4 style="color: var(--success-green); margin-bottom: 10px;">Link Generated Successfully!</h4>
+            <h3 style="color: var(--success-green); margin-bottom: 8px;">Link Ready!</h3>
+            <p style="font-size: 0.9rem; color: var(--text-silver);">Share this link with your audience.</p>
             <div class="url-box">
                 <input type="text" id="g-url" readonly>
-                <button class="btn-copy" onclick="app.copyText('g-url')">Copy</button>
+                <button class="btn-copy" onclick="app.copyText('g-url')">COPY</button>
             </div>
-            <a href="#" id="g-visit" style="color: var(--cyan-neon); font-size: 0.9rem; text-decoration: none;">Visit Link</a>
+            <a href="#" id="g-visit" style="color: var(--success-green); font-weight: 700; text-decoration: none; display: inline-block; margin-top: 10px; border-bottom: 1px solid var(--success-green);">Test Your Link</a>
         </div>
     </main>
 
@@ -291,6 +358,69 @@
 
         const COLORS = { youtube: '#FF0000', telegram: '#0088CC', instagram: '#E1306C', link: '#168CFF' };
 
+        // --- FULL SCREEN CONFETTI / MALA EFFECT (High Graphic) ---
+        const fx = {
+            canvas: null, ctx: null, particles: [], active: false,
+            init() {
+                this.canvas = document.getElementById('confetti-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.resize();
+                window.addEventListener('resize', () => this.resize());
+            },
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            },
+            fire() {
+                this.canvas.style.display = 'block';
+                this.active = true;
+                this.particles = [];
+                const colors = ['#FF173B', '#168CFF', '#00E676', '#FFC65A', '#FF4081'];
+                
+                // Create 150 particles (Flower petals / Confetti)
+                for(let i=0; i<150; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: -20 - Math.random() * 200, // Start above screen
+                        vx: (Math.random() - 0.5) * 5,
+                        vy: Math.random() * 3 + 2,
+                        size: Math.random() * 12 + 6,
+                        color: colors[Math.floor(Math.random() * colors.length)],
+                        rot: Math.random() * 360,
+                        rotSpeed: (Math.random() - 0.5) * 10,
+                        type: Math.random() > 0.5 ? 'circle' : 'rect' // Mix of shapes
+                    });
+                }
+                this.render();
+                // Stop rendering after 5 seconds to save resources
+                setTimeout(() => { this.active = false; setTimeout(()=> this.canvas.style.display='none', 1000); }, 5000);
+            },
+            render() {
+                if(!this.active) return;
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                this.particles.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.rot += p.rotSpeed;
+                    
+                    this.ctx.save();
+                    this.ctx.translate(p.x, p.y);
+                    this.ctx.rotate(p.rot * Math.PI / 180);
+                    this.ctx.fillStyle = p.color;
+                    
+                    if(p.type === 'circle') {
+                        this.ctx.beginPath();
+                        this.ctx.arc(0, 0, p.size/2, 0, Math.PI*2);
+                        this.ctx.fill();
+                    } else {
+                        this.ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size * 1.5); // Petal shape
+                    }
+                    this.ctx.restore();
+                });
+                requestAnimationFrame(() => this.render());
+            }
+        };
+
         // --- CORE APPLICATION LOGIC ---
         const app = {
             config: null,
@@ -298,6 +428,13 @@
             isCreateMode: false,
 
             init() {
+                fx.init();
+                
+                // Hide Loader after 1.5s
+                setTimeout(() => {
+                    document.getElementById('app-loader').classList.add('hidden');
+                }, 1500);
+
                 const params = new URLSearchParams(window.location.search);
                 const id = params.get('id');
                 const mode = params.get('mode');
@@ -317,19 +454,17 @@
                 document.getElementById('bottom-bar').style.display = this.isCreateMode ? 'none' : 'flex';
                 document.getElementById('create-view').style.display = this.isCreateMode ? 'block' : 'none';
                 if(this.isCreateMode && document.getElementById('c-tasks-list').children.length === 0) {
-                    creator.addTaskUI(); // Add one default task if empty
+                    creator.addTaskUI();
                 }
             },
 
             loadConfig(id) {
-                // Default fallback demo if no ID or not found in storage
                 let data = {
-                    title: 'Subscribe & Unlock',
-                    desc: 'Complete the required tasks below to unlock your destination.',
+                    title: 'Premium Content',
                     destUrl: 'https://hrry.design',
                     tasks: [
-                        { id: 't1', platform: 'youtube', title: 'Subscribe Channel', url: 'https://youtube.com', btnText: 'Subscribe' },
-                        { id: 't2', platform: 'telegram', title: 'Join Telegram', url: 'https://telegram.org', btnText: 'Join' }
+                        { id: 't1', platform: 'youtube', title: 'Subscribe to Channel', url: 'https://youtube.com', btnText: 'Subscribe' },
+                        { id: 't2', platform: 'telegram', title: 'Join Telegram VIP', url: 'https://telegram.org', btnText: 'Join' }
                     ]
                 };
 
@@ -342,7 +477,6 @@
                 this.state.totalCount = data.tasks.length;
                 
                 document.getElementById('page-title').textContent = data.title;
-                document.getElementById('page-desc').textContent = data.desc;
                 document.title = data.title + " | HRRY";
 
                 data.tasks.forEach(t => this.state.tasks[t.id] = { status: 'pending' });
@@ -359,7 +493,7 @@
                     const color = COLORS[task.platform] || COLORS.link;
                     const icon = ICONS[task.platform] || ICONS.link;
                     
-                    let btnContent = state.status === 'verified' ? ICONS.check + ' Completed' : 
+                    let btnContent = state.status === 'verified' ? ICONS.check + ' COMPLETED' : 
                                      state.status === 'checking' ? state.countdown :
                                      task.btnText;
                                      
@@ -367,12 +501,12 @@
                     
                     const html = `
                         <div class="task-card ${isVerified ? 'verified' : ''}" id="card-${task.id}">
-                            <div class="platform-icon" style="background: ${isVerified ? '' : `linear-gradient(135deg, ${color}, #000)`}; border: 1px solid ${color}40;">
+                            <div class="platform-icon" style="background: ${isVerified ? '' : `linear-gradient(135deg, ${color}, #000)`};">
                                 ${icon}
                             </div>
                             <div class="task-info">
                                 <div class="task-title">${task.title}</div>
-                                <div class="task-desc">${isVerified ? 'Task verified successfully' : 'Click to complete action'}</div>
+                                <div class="task-desc">${isVerified ? 'Verification Successful' : 'Action Required'}</div>
                             </div>
                             <button class="btn-action" style="${isVerified ? '' : `background: ${color};`}" 
                                 onclick="app.clickTask('${task.id}', '${task.url}')" ${isVerified || state.status === 'checking' ? 'disabled' : ''}>
@@ -386,17 +520,15 @@
 
             clickTask(id, url) {
                 if(this.state.tasks[id].status === 'verified' || this.state.tasks[id].status === 'checking') return;
-                
                 this.state.activeTaskId = id;
-                window.open(url, '_blank'); // Open task URL
+                window.open(url, '_blank'); 
             },
 
-            // This triggers when user comes back to the browser tab
             setupVerificationListener() {
                 window.addEventListener('focus', () => {
                     const taskId = this.state.activeTaskId;
                     if (taskId && this.state.tasks[taskId].status !== 'checking' && this.state.tasks[taskId].status !== 'verified') {
-                        this.state.activeTaskId = null; // Clear to prevent double trigger
+                        this.state.activeTaskId = null; 
                         this.startCountdown(taskId);
                     }
                 });
@@ -405,13 +537,13 @@
             startCountdown(taskId) {
                 this.state.tasks[taskId].status = 'checking';
                 let count = 3;
-                this.state.tasks[taskId].countdown = `Wait ${count}s ${ICONS.spinner}`;
+                this.state.tasks[taskId].countdown = `WAIT ${count}S ${ICONS.spinner}`;
                 this.renderTasks();
 
                 const timer = setInterval(() => {
                     count--;
                     if (count > 0) {
-                        this.state.tasks[taskId].countdown = `Wait ${count}s ${ICONS.spinner}`;
+                        this.state.tasks[taskId].countdown = `WAIT ${count}S ${ICONS.spinner}`;
                         this.renderTasks();
                     } else {
                         clearInterval(timer);
@@ -427,33 +559,37 @@
                 const text = document.getElementById('progress-text');
                 const btn = document.getElementById('btn-unlock');
                 
-                text.textContent = `${this.state.verifiedCount}/${this.state.totalCount} Tasks Verified`;
+                text.textContent = `${this.state.verifiedCount}/${this.state.totalCount} VERIFIED`;
 
                 if (this.state.verifiedCount >= this.state.totalCount && this.state.totalCount > 0) {
                     btn.classList.add('ready');
                     btn.disabled = false;
-                    btn.innerHTML = ICONS.check + ' Unlock Content';
+                    btn.innerHTML = 'UNLOCK NOW ' + ICONS.check;
                     btn.onclick = () => this.revealContent();
                 }
             },
 
             revealContent() {
+                // Fire Confetti/Mala Effect
+                fx.fire();
+
+                // Hide Tasks & Header
                 document.getElementById('tasks-container').style.display = 'none';
+                document.getElementById('main-header').style.display = 'none';
                 document.getElementById('bottom-bar').style.display = 'none';
                 
+                // Show Premium Direct Open Panel
                 const panel = document.getElementById('dest-panel');
                 panel.classList.add('show');
                 
-                document.getElementById('final-url').value = this.config.destUrl;
                 document.getElementById('btn-continue').href = this.config.destUrl;
-                document.getElementById('page-desc').textContent = "All tasks verified. Thank you!";
             },
 
             copyText(elementId) {
                 const input = document.getElementById(elementId);
                 input.select();
                 document.execCommand('copy');
-                alert('Link Copied!');
+                alert('URL Copied to Clipboard!');
             }
         };
 
@@ -482,7 +618,7 @@
                         <input type="text" class="form-control title-input" placeholder="e.g. Subscribe to Channel">
                     </div>
                     <div class="form-group" style="margin-bottom:0;">
-                        <label>URL</label>
+                        <label>Target URL</label>
                         <input type="url" class="form-control url-input" placeholder="https://...">
                     </div>
                 `;
@@ -506,23 +642,21 @@
                     const tUrl = el.querySelector('.url-input').value.trim();
                     if(!tUrl) valid = false;
                     
-                    let btnText = 'Complete';
-                    if(platform === 'youtube') btnText = 'Subscribe';
-                    if(platform === 'telegram') btnText = 'Join';
-                    if(platform === 'instagram') btnText = 'Follow';
+                    let btnText = 'OPEN';
+                    if(platform === 'youtube') btnText = 'SUBSCRIBE';
+                    if(platform === 'telegram') btnText = 'JOIN';
+                    if(platform === 'instagram') btnText = 'FOLLOW';
 
                     tasks.push({ id: 't'+(index+1), platform, title: tTitle, url: tUrl, btnText });
                 });
 
                 if(!valid) { alert("Please enter URLs for all tasks."); return; }
 
-                // Generate Unique ID & Save
                 const id = Math.random().toString(36).substring(2, 8);
-                const configData = { title, desc: 'Complete the required tasks below to unlock your destination.', destUrl, tasks };
+                const configData = { title, destUrl, tasks };
                 
                 localStorage.setItem('hrry_' + id, JSON.stringify(configData));
 
-                // Generate Final Link
                 const baseUrl = window.location.href.split('?')[0];
                 const finalLink = `${baseUrl}?id=${id}`;
                 
@@ -530,14 +664,11 @@
                 document.getElementById('g-url').value = finalLink;
                 document.getElementById('g-visit').href = finalLink;
                 
-                // Scroll to bottom
-                window.scrollTo(0, document.body.scrollHeight);
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             }
         };
 
-        // Initialize on load
         window.onload = () => app.init();
-
     </script>
 </body>
 </html>
