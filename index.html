@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>HRRY Sub to Unlock | Premium</title>
+    <meta name="theme-color" content="#03050B">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Brand Colors */
+            --bg-obsidian: #03050B;
+            --bg-panel: rgba(10, 15, 30, 0.7);
+            --primary-red: #FF173B;
+            --electric-blue: #168CFF;
+            --cyan-neon: #45DFFF;
+            --success-green: #10B981;
+            --success-bg: rgba(16, 185, 129, 0.15);
+            --gold-accent: #FFC65A;
+            
+            /* Text */
+            --text-white: #FFFFFF;
+            --text-silver: #E2E8F0;
+            --text-muted: #94A3B8;
+            
+            /* UI Elements */
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-obsidian);
+            color: var(--text-white);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background */
+        .ambient-bg {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, rgba(22, 140, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 100%, rgba(255, 23, 59, 0.1) 0%, transparent 50%);
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            padding: 12px 20px;
+            background: rgba(3, 5, 11, 0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex; justify-content: space-between; align-items: center;
+        }
+
+        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
+        .logo-box { 
+            width: 32px; height: 32px; 
+            background: linear-gradient(135deg, #111, #000); border: 1px solid var(--gold-accent);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 10px rgba(255, 198, 90, 0.2);
+        }
+        .logo-box svg { width: 16px; height: 16px; fill: var(--gold-accent); }
+        .brand-text { font-weight: 700; font-size: 1.1rem; letter-spacing: 1px; }
+
+        .btn-create-nav {
+            background: rgba(22, 140, 255, 0.1); border: 1px solid var(--electric-blue);
+            color: var(--cyan-neon); padding: 6px 14px; border-radius: 20px;
+            font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: var(--transition);
+        }
+        .btn-create-nav:hover { background: var(--electric-blue); color: white; box-shadow: 0 0 15px rgba(22, 140, 255, 0.4); }
+
+        /* Main Container */
+        .container {
+            width: 100%; max-width: 600px; margin: 0 auto; padding: 20px 16px 100px;
+            display: flex; flex-direction: column; gap: 16px;
+        }
+
+        /* Header / Hero */
+        .header-panel { text-align: center; padding: 10px 0 20px; }
+        .header-panel h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 6px; }
+        .header-panel p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.4; }
+
+        /* Compact Task Cards */
+        .task-card {
+            background: var(--bg-panel); border: 1px solid var(--glass-border);
+            border-radius: 12px; padding: 12px 16px;
+            display: flex; align-items: center; gap: 12px;
+            transition: var(--transition); position: relative; overflow: hidden;
+        }
+        .task-card:hover { border-color: rgba(255, 255, 255, 0.2); }
+
+        /* The Complete Green State */
+        .task-card.verified {
+            background: var(--success-bg) !important;
+            border-color: var(--success-green) !important;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .platform-icon {
+            width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .platform-icon svg { width: 22px; height: 22px; fill: #fff; }
+        
+        .task-card.verified .platform-icon {
+            background: var(--success-green);
+        }
+
+        .task-info { flex-grow: 1; min-width: 0; }
+        .task-title { font-size: 1rem; font-weight: 600; color: var(--text-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .task-desc { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        .task-card.verified .task-title, 
+        .task-card.verified .task-desc { color: var(--success-green); }
+
+        .btn-action {
+            padding: 8px 16px; border-radius: 8px; font-size: 0.85rem; font-weight: 600;
+            border: none; cursor: pointer; color: white; display: flex; align-items: center; gap: 6px;
+            flex-shrink: 0; transition: var(--transition);
+        }
+        .btn-action:active { transform: scale(0.95); }
+        .btn-action svg { width: 14px; height: 14px; fill: currentColor; }
+
+        .task-card.verified .btn-action {
+            background: transparent !important; color: var(--success-green) !important; border: 1px solid var(--success-green); cursor: default; pointer-events: none;
+        }
+
+        /* Sticky Bottom Progress/Unlock Bar */
+        .bottom-bar {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(3, 5, 11, 0.95); backdrop-filter: blur(15px);
+            border-top: 1px solid var(--glass-border);
+            padding: 16px 20px; padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            display: flex; flex-direction: column; align-items: center; z-index: 99;
+        }
+        
+        .progress-text { font-size: 0.9rem; font-weight: 600; color: var(--text-silver); margin-bottom: 12px; }
+        
+        .btn-unlock {
+            width: 100%; max-width: 400px;
+            background: rgba(255, 255, 255, 0.1); color: var(--text-muted);
+            border: 1px solid var(--glass-border);
+            padding: 14px; border-radius: 12px; font-size: 1rem; font-weight: 600;
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            cursor: not-allowed; transition: var(--transition);
+        }
+        
+        .btn-unlock.ready {
+            background: linear-gradient(90deg, #168CFF, #45DFFF); color: #000;
+            border: none; cursor: pointer; box-shadow: 0 0 20px rgba(69, 223, 255, 0.4);
+        }
+        .btn-unlock.ready:active { transform: scale(0.98); }
+
+        /* Destination Panel (Hidden initially) */
+        .destination-panel {
+            background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success-green);
+            border-radius: 16px; padding: 24px; text-align: center; margin-top: 10px;
+            display: none; animation: fadeIn 0.5s;
+        }
+        .destination-panel.show { display: block; }
+        .destination-panel h2 { color: var(--success-green); font-size: 1.5rem; margin-bottom: 16px; }
+        
+        .url-box {
+            display: flex; background: rgba(0,0,0,0.5); border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1); padding: 10px; margin-bottom: 16px;
+        }
+        .url-box input {
+            flex-grow: 1; background: transparent; border: none; color: white;
+            outline: none; font-family: monospace; font-size: 0.9rem;
+        }
+        .btn-copy { background: transparent; border: none; color: var(--cyan-neon); padding: 0 10px; cursor: pointer; }
+
+        /* CREATE MODE UI (Hidden by default) */
+        #create-view { display: none; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
+        .form-control {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            color: white; padding: 12px; border-radius: 8px; font-size: 1rem; outline: none;
+        }
+        .form-control:focus { border-color: var(--electric-blue); }
+        
+        .creator-task {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--glass-border);
+            padding: 12px; border-radius: 8px; margin-bottom: 10px; position: relative;
+        }
+        .remove-task { position: absolute; top: 10px; right: 10px; color: var(--primary-red); cursor: pointer; border: none; background: none; font-size: 1.2rem; }
+        
+        .btn-add { background: rgba(255,255,255,0.1); color: white; border: none; padding: 10px; width: 100%; border-radius: 8px; cursor: pointer; margin-bottom: 20px;}
+        .btn-generate { background: var(--electric-blue); color: white; border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; }
+
+        #generated-link-box { display: none; margin-top: 20px; background: rgba(16, 185, 129, 0.1); padding: 16px; border-radius: 8px; border: 1px solid var(--success-green); text-align: center; }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Spinner */
+        .spinner { animation: spin 1s linear infinite; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    </style>
+</head>
+<body>
+    <div class="ambient-bg"></div>
+
+    <nav>
+        <a href="?" class="brand">
+            <div class="logo-box"><svg viewBox="0 0 24 24"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5z"/></svg></div>
+            <span class="brand-text">HRRY</span>
+        </a>
+        <button class="btn-create-nav" onclick="app.toggleMode()">Create Link</button>
+    </nav>
+
+    <!-- VIEW MODE (Unlocker) -->
+    <main class="container" id="main-view">
+        <div class="header-panel">
+            <h1 id="page-title">Subscribe & Unlock</h1>
+            <p id="page-desc">Complete the required tasks below to unlock your destination.</p>
+        </div>
+
+        <div id="tasks-container" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- Tasks injected dynamically -->
+        </div>
+
+        <div class="destination-panel" id="dest-panel">
+            <h2>🎉 Content Unlocked!</h2>
+            <div class="url-box">
+                <input type="text" id="final-url" readonly>
+                <button class="btn-copy" onclick="app.copyText('final-url')">Copy</button>
+            </div>
+            <a href="#" id="btn-continue" style="display: inline-block; background: var(--success-green); color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">Go to Destination</a>
+        </div>
+    </main>
+
+    <div class="bottom-bar" id="bottom-bar">
+        <div class="progress-text" id="progress-text">0/0 Tasks Verified</div>
+        <button class="btn-unlock" id="btn-unlock" disabled>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"/></svg>
+            Content Locked
+        </button>
+    </div>
+
+    <!-- CREATE MODE (Admin) -->
+    <main class="container" id="create-view">
+        <div class="header-panel">
+            <h1>Create Unlock Link</h1>
+            <p>Generate a secure link to lock your content.</p>
+        </div>
+
+        <div class="form-group">
+            <label>Page Title</label>
+            <input type="text" id="c-title" class="form-control" placeholder="e.g. My Premium Resources" value="My Premium Resources">
+        </div>
+        
+        <div class="form-group">
+            <label>Destination URL (Hidden Content)</label>
+            <input type="url" id="c-dest" class="form-control" placeholder="https://drive.google.com/..." value="https://example.com/secret">
+        </div>
+
+        <h3 style="margin: 20px 0 10px; font-size: 1.1rem;">Required Tasks</h3>
+        <div id="c-tasks-list"></div>
+        <button class="btn-add" onclick="creator.addTaskUI()">+ Add Another Task</button>
+
+        <button class="btn-generate" onclick="creator.generateLink()">Generate Link</button>
+
+        <div id="generated-link-box">
+            <h4 style="color: var(--success-green); margin-bottom: 10px;">Link Generated Successfully!</h4>
+            <div class="url-box">
+                <input type="text" id="g-url" readonly>
+                <button class="btn-copy" onclick="app.copyText('g-url')">Copy</button>
+            </div>
+            <a href="#" id="g-visit" style="color: var(--cyan-neon); font-size: 0.9rem; text-decoration: none;">Visit Link</a>
+        </div>
+    </main>
+
+    <script>
+        // --- ICONS DICTIONARY ---
+        const ICONS = {
+            youtube: '<svg viewBox="0 0 24 24"><path d="M21.58 7.19c-.23-.86-.91-1.54-1.77-1.77C18.25 5 12 5 12 5s-6.25 0-7.81.42c-.86.23-1.54.91-1.77 1.77C2 8.75 2 12 2 12s0 3.25.42 4.81c.23.86.91 1.54 1.77 1.77C5.75 19 12 19 12 19s6.25 0 7.81-.42c.86-.23 1.54-.91 1.77-1.77C22 15.25 22 12 22 12s0-3.25-.42-4.81zM10 15V9l5.2 3-5.2 3z"/></svg>',
+            telegram: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.26-5.61 3.71-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.06-.49-.83-.27-1.49-.41-1.43-.87.03-.24.38-.48 1.04-.74 4.08-1.78 6.8-2.95 8.16-3.52 3.88-1.63 4.69-1.91 5.22-1.92.12 0 .38.03.53.15.13.1.17.24.18.35.01.07.02.16.02.26z"/></svg>',
+            instagram: '<svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2zm-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.4 5.6 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.6 18.4 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25zM12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg>',
+            link: '<svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>',
+            check: '<svg viewBox="0 0 24 24"><path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>',
+            spinner: '<svg class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="3" stroke-dasharray="31.4 31.4" stroke-linecap="round"></circle></svg>'
+        };
+
+        const COLORS = { youtube: '#FF0000', telegram: '#0088CC', instagram: '#E1306C', link: '#168CFF' };
+
+        // --- CORE APPLICATION LOGIC ---
+        const app = {
+            config: null,
+            state: { tasks: {}, activeTaskId: null, verifiedCount: 0, totalCount: 0 },
+            isCreateMode: false,
+
+            init() {
+                const params = new URLSearchParams(window.location.search);
+                const id = params.get('id');
+                const mode = params.get('mode');
+                
+                if (mode === 'create') {
+                    this.toggleMode(true);
+                    return;
+                }
+
+                this.loadConfig(id);
+                this.setupVerificationListener();
+            },
+
+            toggleMode(forceCreate = false) {
+                this.isCreateMode = forceCreate || !this.isCreateMode;
+                document.getElementById('main-view').style.display = this.isCreateMode ? 'none' : 'flex';
+                document.getElementById('bottom-bar').style.display = this.isCreateMode ? 'none' : 'flex';
+                document.getElementById('create-view').style.display = this.isCreateMode ? 'block' : 'none';
+                if(this.isCreateMode && document.getElementById('c-tasks-list').children.length === 0) {
+                    creator.addTaskUI(); // Add one default task if empty
+                }
+            },
+
+            loadConfig(id) {
+                // Default fallback demo if no ID or not found in storage
+                let data = {
+                    title: 'Subscribe & Unlock',
+                    desc: 'Complete the required tasks below to unlock your destination.',
+                    destUrl: 'https://hrry.design',
+                    tasks: [
+                        { id: 't1', platform: 'youtube', title: 'Subscribe Channel', url: 'https://youtube.com', btnText: 'Subscribe' },
+                        { id: 't2', platform: 'telegram', title: 'Join Telegram', url: 'https://telegram.org', btnText: 'Join' }
+                    ]
+                };
+
+                if (id) {
+                    const saved = localStorage.getItem('hrry_' + id);
+                    if (saved) data = JSON.parse(saved);
+                }
+
+                this.config = data;
+                this.state.totalCount = data.tasks.length;
+                
+                document.getElementById('page-title').textContent = data.title;
+                document.getElementById('page-desc').textContent = data.desc;
+                document.title = data.title + " | HRRY";
+
+                data.tasks.forEach(t => this.state.tasks[t.id] = { status: 'pending' });
+                this.renderTasks();
+                this.updateBottomBar();
+            },
+
+            renderTasks() {
+                const container = document.getElementById('tasks-container');
+                container.innerHTML = '';
+
+                this.config.tasks.forEach(task => {
+                    const state = this.state.tasks[task.id];
+                    const color = COLORS[task.platform] || COLORS.link;
+                    const icon = ICONS[task.platform] || ICONS.link;
+                    
+                    let btnContent = state.status === 'verified' ? ICONS.check + ' Completed' : 
+                                     state.status === 'checking' ? state.countdown :
+                                     task.btnText;
+                                     
+                    let isVerified = state.status === 'verified';
+                    
+                    const html = `
+                        <div class="task-card ${isVerified ? 'verified' : ''}" id="card-${task.id}">
+                            <div class="platform-icon" style="background: ${isVerified ? '' : `linear-gradient(135deg, ${color}, #000)`}; border: 1px solid ${color}40;">
+                                ${icon}
+                            </div>
+                            <div class="task-info">
+                                <div class="task-title">${task.title}</div>
+                                <div class="task-desc">${isVerified ? 'Task verified successfully' : 'Click to complete action'}</div>
+                            </div>
+                            <button class="btn-action" style="${isVerified ? '' : `background: ${color};`}" 
+                                onclick="app.clickTask('${task.id}', '${task.url}')" ${isVerified || state.status === 'checking' ? 'disabled' : ''}>
+                                ${btnContent}
+                            </button>
+                        </div>
+                    `;
+                    container.insertAdjacentHTML('beforeend', html);
+                });
+            },
+
+            clickTask(id, url) {
+                if(this.state.tasks[id].status === 'verified' || this.state.tasks[id].status === 'checking') return;
+                
+                this.state.activeTaskId = id;
+                window.open(url, '_blank'); // Open task URL
+            },
+
+            // This triggers when user comes back to the browser tab
+            setupVerificationListener() {
+                window.addEventListener('focus', () => {
+                    const taskId = this.state.activeTaskId;
+                    if (taskId && this.state.tasks[taskId].status !== 'checking' && this.state.tasks[taskId].status !== 'verified') {
+                        this.state.activeTaskId = null; // Clear to prevent double trigger
+                        this.startCountdown(taskId);
+                    }
+                });
+            },
+
+            startCountdown(taskId) {
+                this.state.tasks[taskId].status = 'checking';
+                let count = 3;
+                this.state.tasks[taskId].countdown = `Wait ${count}s ${ICONS.spinner}`;
+                this.renderTasks();
+
+                const timer = setInterval(() => {
+                    count--;
+                    if (count > 0) {
+                        this.state.tasks[taskId].countdown = `Wait ${count}s ${ICONS.spinner}`;
+                        this.renderTasks();
+                    } else {
+                        clearInterval(timer);
+                        this.state.tasks[taskId].status = 'verified';
+                        this.state.verifiedCount++;
+                        this.renderTasks();
+                        this.updateBottomBar();
+                    }
+                }, 1000);
+            },
+
+            updateBottomBar() {
+                const text = document.getElementById('progress-text');
+                const btn = document.getElementById('btn-unlock');
+                
+                text.textContent = `${this.state.verifiedCount}/${this.state.totalCount} Tasks Verified`;
+
+                if (this.state.verifiedCount >= this.state.totalCount && this.state.totalCount > 0) {
+                    btn.classList.add('ready');
+                    btn.disabled = false;
+                    btn.innerHTML = ICONS.check + ' Unlock Content';
+                    btn.onclick = () => this.revealContent();
+                }
+            },
+
+            revealContent() {
+                document.getElementById('tasks-container').style.display = 'none';
+                document.getElementById('bottom-bar').style.display = 'none';
+                
+                const panel = document.getElementById('dest-panel');
+                panel.classList.add('show');
+                
+                document.getElementById('final-url').value = this.config.destUrl;
+                document.getElementById('btn-continue').href = this.config.destUrl;
+                document.getElementById('page-desc').textContent = "All tasks verified. Thank you!";
+            },
+
+            copyText(elementId) {
+                const input = document.getElementById(elementId);
+                input.select();
+                document.execCommand('copy');
+                alert('Link Copied!');
+            }
+        };
+
+        // --- CREATOR LOGIC ---
+        const creator = {
+            taskCounter: 0,
+            
+            addTaskUI() {
+                this.taskCounter++;
+                const div = document.createElement('div');
+                div.className = 'creator-task';
+                div.id = `ct-${this.taskCounter}`;
+                div.innerHTML = `
+                    <button class="remove-task" onclick="this.parentElement.remove()">×</button>
+                    <div class="form-group">
+                        <label>Platform</label>
+                        <select class="form-control platform-sel">
+                            <option value="youtube">YouTube</option>
+                            <option value="telegram">Telegram</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="link">Website / Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Task Title</label>
+                        <input type="text" class="form-control title-input" placeholder="e.g. Subscribe to Channel">
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <label>URL</label>
+                        <input type="url" class="form-control url-input" placeholder="https://...">
+                    </div>
+                `;
+                document.getElementById('c-tasks-list').appendChild(div);
+            },
+
+            generateLink() {
+                const title = document.getElementById('c-title').value.trim();
+                const destUrl = document.getElementById('c-dest').value.trim();
+                
+                if(!title || !destUrl) { alert("Please fill Title and Destination URL."); return; }
+
+                const taskElements = document.querySelectorAll('.creator-task');
+                if(taskElements.length === 0) { alert("Add at least one task."); return; }
+
+                const tasks = [];
+                let valid = true;
+                taskElements.forEach((el, index) => {
+                    const platform = el.querySelector('.platform-sel').value;
+                    const tTitle = el.querySelector('.title-input').value.trim() || `Task ${index+1}`;
+                    const tUrl = el.querySelector('.url-input').value.trim();
+                    if(!tUrl) valid = false;
+                    
+                    let btnText = 'Complete';
+                    if(platform === 'youtube') btnText = 'Subscribe';
+                    if(platform === 'telegram') btnText = 'Join';
+                    if(platform === 'instagram') btnText = 'Follow';
+
+                    tasks.push({ id: 't'+(index+1), platform, title: tTitle, url: tUrl, btnText });
+                });
+
+                if(!valid) { alert("Please enter URLs for all tasks."); return; }
+
+                // Generate Unique ID & Save
+                const id = Math.random().toString(36).substring(2, 8);
+                const configData = { title, desc: 'Complete the required tasks below to unlock your destination.', destUrl, tasks };
+                
+                localStorage.setItem('hrry_' + id, JSON.stringify(configData));
+
+                // Generate Final Link
+                const baseUrl = window.location.href.split('?')[0];
+                const finalLink = `${baseUrl}?id=${id}`;
+                
+                document.getElementById('generated-link-box').style.display = 'block';
+                document.getElementById('g-url').value = finalLink;
+                document.getElementById('g-visit').href = finalLink;
+                
+                // Scroll to bottom
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        };
+
+        // Initialize on load
+        window.onload = () => app.init();
+
+    </script>
+</body>
+</html>
